@@ -15,7 +15,7 @@ Switch case
 public class _005DecisionMakingStatements {
     public static void main(String[] args) {
         _005DecisionMakingStatements obj = new _005DecisionMakingStatements();
-        obj.switchCaseExample();
+        obj.gradeUsingSwitchcase();
     }
 
     public void ifexample(){
