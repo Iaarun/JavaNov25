@@ -9,72 +9,97 @@ public class _006ControlFLowStatement {
 
     public static void main(String[] args) {
         _006ControlFLowStatement obj = new _006ControlFLowStatement();
-        obj.starPattern2();
+        obj.continueExample();
     }
 
-    public void forLoopExample(){
+    public void forLoopExample() {
 
         // for(initialization; condition; increment/decrement){
         //     // code to be executed
         // }
 
-        for(int i=1; i<=5; i = i+1){
-            System.out.println("Hello Java!!" );
+        for (int i = 1; i <= 5; i = i + 1) {
+            System.out.println("Hello Java!!");
         }
 
         //print the sum of 10 natural numbers
-        int sum =0;
-        for (int i=1; i<=10; i++){
-            sum= sum+i;
+        int sum = 0;
+        for (int i = 1; i <= 10; i++) {
+            sum = sum + i;
         }
 
-        System.out.println("Sum of first 10 natural numbers is: "+sum);
+        System.out.println("Sum of first 10 natural numbers is: " + sum);
     }
 
-    public void whileLoopExample(){
+    public void whileLoopExample() {
         // initialization
         // while(condition){
         //     // code to be executed
         //     // increment/decrement
         // }
-        int sum =0;
-        int i=1;
-        while(i<=10){
-            sum = sum+i;
+        int sum = 0;
+        int i = 1;
+        while (i <= 10) {
+            sum = sum + i;
             i++;
         }
-        System.out.println("Sum of first 10 natural numbers is: "+sum);
+        System.out.println("Sum of first 10 natural numbers is: " + sum);
 
     }
 
-    public void nestedforloop(){
+    public void nestedforloop() {
         //outer loop works on the rows
-        for(int i=1; i<=3; i++){
+        for (int i = 1; i <= 3; i++) {
             //inner loop works on the columns
-            for(int j=1; j<=2; j++){
-                System.out.print("i: "+i+" j: "+j);
+            for (int j = 1; j <= 2; j++) {
+                System.out.print("i: " + i + " j: " + j);
             }
             System.out.println();
         }
 
     }
 
-    public void starPattern1(){
-        for(int i=1; i<=4; i++){
-            for (int j=1; j<=3; j++){
-                System.out.print("*"+" ");
+    public void starPattern1() {
+        for (int i = 1; i <= 4; i++) {
+            for (int j = 1; j <= 3; j++) {
+                System.out.print("*" + " ");
             }
             System.out.println();
         }
     }
 
-    public void starPattern2(){
-        for(int i=1; i<=4; i++){
-            for (int j=1; j<=i; j++){
-                System.out.print("*"+" ");
+    public void starPattern2() {
+        for (int i = 1; i <= 4; i++) {
+            for (int j = 1; j <= i; j++) {
+                System.out.print("*" + " ");
             }
             System.out.println();
         }
     }
 
+    //break and continue statements in loops
+    public void breakExample() {
+        //print numbers from 1 to 10 , but stop the loop when number is 6
+        for (int i = 1; i <= 10; i++) {
+            if (i == 3) {
+                break; // exit the loop
+            }
+            System.out.print(i + " ");
+        }
+        System.out.println();
+
+
+    }
+
+    public void continueExample() {
+        //print numbers from 1 to 10 , but skip the number 6
+        for (int i = 1; i <= 10; i++) {
+            if (i == 6) {
+                continue; // skip the current iteration
+            }
+            System.out.print(i + " ");
+        }
+        System.out.println();
+
+    }
 }
