@@ -45,7 +45,6 @@ public class _001Variables {
         System.out.println(course);
         System.out.println(_001Variables.course);
     }
-
-
+// iteratre over the strig charcters
 
 }

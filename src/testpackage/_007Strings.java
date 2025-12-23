@@ -1,10 +1,12 @@
 package testpackage;
 
+import java.util.Arrays;
+
 public class _007Strings {
     public static void main(String[] args) {
 
         _007Strings stringObj = new _007Strings();
-        stringObj.stringFunctions();
+        stringObj.reverseaString();
     }
 
     public void createStrings(){
@@ -36,7 +38,7 @@ public class _007Strings {
         // Length of the string
         System.out.println("Length: " + sample.length());
         System.out.println(sample);
-        //trim
+        //trim to remove leading and trailing spaces
         System.out.println("Trimmed: '" + sample.trim() + "'");
         //uppercase
         System.out.println("Uppercase: " + sample.toUpperCase());
@@ -52,10 +54,72 @@ public class _007Strings {
         String email= "xyzjcvxhkdsbvksjbvksbjvksbvkbsj@gmail.com";
         String username= email.substring(0, email.indexOf('@'));
         System.out.println("Username extracted from email: "+username);
+        //indexOf
+        System.out.println("Index of 'l': " + sample.indexOf('l'));
+        //lastIndexOf
+        System.out.println("Last Index of 'l': " + sample.lastIndexOf('l'));
+        //contains
+        System.out.println("Contains 'World': " + sample.contains("world"));
+        //equals
+        System.out.println("Equals 'Hello World': " + sample.equals("Hello World"));
+        //equalsIgnoreCase
+        System.out.println("Equals Ignore Case 'hello world': " + sample.equalsIgnoreCase("hello world"));
+       // compareTo
+        System.out.println("Compare to 'Hello Java': " + sample.compareTo("Hello java"));
+        //compareToIgnoreCase
+        System.out.println("Compare to Ignore Case 'hello java': " + sample.compareToIgnoreCase("hello world"));
+        // replace
+        System.out.println("Replace 'World' with 'Java': " + sample.replace("World", "Java"));
+        System.out.println(sample.replace(" ",""));
 
+        //split
+        String str = "apple,banana,cherry";
+        String[] fruits= str.split("banana");
+        System.out.println("Fruits:");
+        for(String fruit: fruits) {
+            System.out.println(fruit);
+        }
+         char[] arr=  sample.toCharArray();
+        System.out.println(Arrays.toString(arr));
 
-        //replace
+        System.out.println(sample.startsWith("ello"));
+        System.out.println(sample.endsWith("ld"));
 
+        // isEmpty
+        String emptyStr= "";
+        System.out.println("Is empty string: "+ emptyStr.isEmpty());
     }
 
+    //iterate of string characters
+    public void iterateStringCharacters() {
+        String str = "Hello";
+        for (int i = 0; i <= str.length() - 1; i++) {
+            System.out.println("Character at index " + i + " is: " + str.charAt(i));
+        }
+
+    }
+    public void reverseaString(){
+        String str = "Hello";  // olleH
+        String reversed = "";
+        for(int i=str.length()-1;i>=0; i--){
+            reversed += str.charAt(i);
+        }
+        System.out.println("Reversed String: "+reversed);
+
+        String rev="";
+        for(int i=0; i<=str.length()-1;i++){
+
+            rev= str.charAt(i)+rev;
+
+        }
+        System.out.println("Reversed String: "+rev);
+    }
+
+    //StringBuilder and StringBuffer  - mutable strings
+
+    //String palendrome check
+    //  level
+
+    //Anagram
+    //listen  silent
 }
