@@ -115,6 +115,24 @@ public class _007Strings {
         System.out.println("Reversed String: "+rev);
     }
 
+    public void createStringusingStringBuilder(){
+        StringBuilder sb= new StringBuilder("Hello");
+        sb.append(" World");
+        System.out.println("StringBuilder after append: "+ sb.toString());
+
+        sb.insert(5, ",");
+        System.out.println("StringBuilder after insert: "+ sb.toString());
+
+        sb.replace(0,5,"Hi");
+        System.out.println("StringBuilder after replace: "+ sb.toString());
+
+        sb.delete(2,3);
+        System.out.println("StringBuilder after delete: "+ sb.toString());
+
+        sb.reverse();
+        System.out.println("StringBuilder after reverse: "+ sb.toString());
+    }
+
     //StringBuilder and StringBuffer  - mutable strings
 
     //String palendrome check
