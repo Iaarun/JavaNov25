@@ -9,7 +9,7 @@ public class _006ControlFLowStatement {
 
     public static void main(String[] args) {
         _006ControlFLowStatement obj = new _006ControlFLowStatement();
-        obj.continueExample();
+        obj.starPattern1();
     }
 
     public void forLoopExample() {
@@ -60,7 +60,7 @@ public class _006ControlFLowStatement {
     }
 
     public void starPattern1() {
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i >= 4; i++) {
             for (int j = 1; j <= 3; j++) {
                 System.out.print("*" + " ");
             }
