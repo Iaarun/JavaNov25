@@ -32,6 +32,14 @@ public class Calculator {
         System.out.println("Sum of two doubles: " + (a + b));
     }
 
+    public  void getlogvalue(){
+        System.out.println("get the value of log base 10");
+    }
+
+    public  static void getlogvalue(int a){
+        System.out.println("get the value of log base 10 of "+a);
+    }
+
     //can we acheive method overlading by changing the return type?
     // No, method overloading cannot be achieved by changing only the return type of the method.
     public static void main(String[] args) {
