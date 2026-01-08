@@ -1,7 +1,10 @@
 package collectiondemo;
 
-import java.util.ArrayList;
-
+import java.util.*;
+/*
+  it maintains the insertion order
+  it allows duplicate
+ */
 public class ArrayListDemo {
     public static void main(String[] args) {
         ArrayListDemo demo = new ArrayListDemo();
@@ -117,6 +120,9 @@ public class ArrayListDemo {
         System.out.println(fruits);
         fruits.removeAll(veggies);
         System.out.println(fruits);
+
+        ArrayList<String> sample = new ArrayList<>(fruits);
+
     }
 
     public void iterateOverList(){
@@ -138,6 +144,7 @@ public class ArrayListDemo {
         fruits.add("Orange");
         fruits.add("Cherry");
         fruits.add("Orange");
+        //normal for loop works on indices
         System.out.println("===== Using for loop  ====");
         for(int i=0; i<=fruits.size()-1; i++){
             System.out.print(fruits.get(i)+" ");
@@ -145,18 +152,59 @@ public class ArrayListDemo {
         System.out.println();
         System.out.println("==== Enhanced for loop ====");
 
+        // enhanced for loop works on reference
         for(String fruit: fruits){
             System.out.print(fruit+" ");
         }
 
         System.out.println();
         System.out.println("==== Using While loop ====");
-
         int i=0;
         while(i<=fruits.size()-1){
             System.out.print(fruits.get(i)+" ");
             i++;
         }
+        System.out.println();
+        System.out.println("==== Using for each function ====");
+
+        fruits.forEach( fruit ->{
+            System.out.print(fruit+" ");
+        });
+
+        System.out.println();
+        System.out.println("==== Using stream api ====");
+
+        fruits.stream().forEach(fruit->{
+            System.out.print(fruit+" ");
+        });
+
+        System.out.println();
+        System.out.println("==== Using Iterator ====");
+
+        Iterator<String> it= fruits.iterator();
+        while(it.hasNext()){
+            System.out.print(it.next()+" ");
+        }
+        System.out.println();
+        System.out.println("==== forward Using List Iterator ====");
+
+        ListIterator<String> lit= fruits.listIterator();
+
+        while(lit.hasNext()){
+            System.out.print(lit.next()+" ");
+        }
+        System.out.println();
+        System.out.println("==== backward Using List Iterator ====");
+        while(lit.hasPrevious()){
+            System.out.print(lit.previous()+" ");
+        }
+
+        System.out.println();
+        System.out.println("====  Using Enumeration ====");
+       Enumeration<String> en= Collections.enumeration(fruits);
+       while(en.hasMoreElements()){
+           System.out.print(en.nextElement()+" ");
+       }
 
     }
 }
