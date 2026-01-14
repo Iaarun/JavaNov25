@@ -44,6 +44,7 @@ public class HashSetDemo {
 
 
     }
+    // why copilot stop suggestions
 
     public void iterateSet(){
         HashSet<String> fruits = new HashSet<>();
