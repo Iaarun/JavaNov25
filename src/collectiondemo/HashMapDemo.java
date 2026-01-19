@@ -1,9 +1,6 @@
 package collectiondemo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class HashMapDemo {
     public static void main(String[] args) {
@@ -65,9 +62,13 @@ public class HashMapDemo {
 
         // iterate over keys
         System.out.println("===== Iterating over keys =====");
-        for(Integer k : map.keySet()){
-            System.out.print(k+" ");
-        }
+       Set<Integer> kset=  map.keySet();
+//        for(Integer k : map.keySet()){
+//            System.out.print(k+" ");
+//        }
+              for(Integer k : kset){
+                  System.out.print(k+" ");
+              }
 
         System.out.println();
         System.out.println("===== Iterating over values =====");
