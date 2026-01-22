@@ -18,7 +18,7 @@ public class HandlePropertiesFile {
         //use Properties class to read properties file
         Properties properties = null;
         try{
-            fis = new FileInputStream(file);
+            fis = new FileInputStream(file); // input stream to read the file
             properties = new Properties();
             properties.load(fis);
             
