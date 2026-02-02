@@ -6,7 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
 import java.util.Set;
 /*
   isSelected() method is used to check whether a checkbox or radio button is selected or not
@@ -21,10 +23,10 @@ import java.util.Set;
 public class Seleniumscripts {
    String url= "https://www.selenium.dev/";
     WebDriver driver;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
       Seleniumscripts seleniumscripts = new Seleniumscripts();
       seleniumscripts.launchBrowser("chrome");
-      seleniumscripts.handleChekbox();
+      seleniumscripts.handleDropDown();
      // seleniumscripts.teardown();
 
     }
@@ -74,6 +76,43 @@ public class Seleniumscripts {
 
         driver.navigate().refresh();
 
+    }
+
+    public void handleDropDown() throws InterruptedException {
+      driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+        //locate the drop down
+     WebElement dropdown=   driver.findElement(By.name("my-select"));
+     //Select class is used to handle drop down
+        Select select = new Select(dropdown);
+        // get the deafault select option
+      WebElement selectedoption=  select.getFirstSelectedOption();
+        System.out.println("Default selected option: "+selectedoption.getText());
+        //get all the options of the drop down
+      List<WebElement> allopt= select.getOptions();
+      allopt.forEach(x-> System.out.println(x.getText()));
+        //select by visible text
+        select.selectByVisibleText("Two");
+        Thread.sleep(2000);
+        //select by value
+        select.selectByValue("3");
+        Thread.sleep(2000);
+        //select by index
+        select.selectByIndex(1);
+
+        System.out.println("Is my dropdown supporting multi selection:"+ select.isMultiple());
+    }
+
+    public void ClickOnButton(){
+        driver.navigate().to("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+        // click on the submitt button
+    WebElement submit_btn=   driver.findElement(By.xpath("//button[contains(text(),'Submit')]"));
+    submit_btn.click();
+ //   submit_btn.submit(); // works only on form type of elements
+        //fetch the success message after form submission
+     WebElement message=   driver.findElement(By.xpath("//main[@class='flex-shrink-2']/div[1]/div[3]/div[1]/h1"));
+     //getText() method to fetch the text of the web element
+       String msg= message.getText();
+        System.out.println("Form submission message: "+msg);
     }
 
     public void senddatatoInputbox(){
