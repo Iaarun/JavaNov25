@@ -3,6 +3,7 @@ package seleniumBasics;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.time.Duration;
@@ -26,8 +27,8 @@ public class Seleniumscripts {
     public static void main(String[] args) throws InterruptedException {
         Seleniumscripts seleniumscripts = new Seleniumscripts();
         seleniumscripts.launchBrowser("chrome");
-        seleniumscripts.handleframes();
-        seleniumscripts.teardown();
+        seleniumscripts.typeCharatcerInInputBox();
+     //   seleniumscripts.teardown();
 
     }
 
@@ -78,18 +79,68 @@ public class Seleniumscripts {
 
     }
 
+    public void typeCharatcerInInputBox(){
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+        WebElement inputbox= driver.findElement(By.name("my-text"));
+        Actions action = new Actions(driver);
+        action.moveToElement(inputbox).click().keyDown(Keys.LEFT_SHIFT).sendKeys("hello selenium").keyUp(Keys.LEFT_SHIFT).build().perform();
+      /*
+       Navigate to application
+       Mousehover on submit button
+       Print the background color of the button after mouse hover
+       */
+
+    }
+
+    public void handleSlider() throws InterruptedException {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+        WebElement slider= driver.findElement(By.xpath("//input[@name='my-range']"));
+        Actions action = new Actions(driver);
+        //move the slider to right by 30 units
+        action.clickAndHold(slider).moveByOffset(150,0).release().build().perform();
+        Thread.sleep(2000);
+        action.clickAndHold(slider).moveByOffset(-250,0).release().build().perform();
+      //  action.dragAndDropBy(slider,100,0).perform();
+    }
+
+    public void dragAndDrop(){
+        driver.get("https://jqueryui.com/droppable/");
+        //switch to frame
+        driver.switchTo().frame(0);
+        WebElement src = driver.findElement(By.id("draggable"));
+        WebElement tgt = driver.findElement(By.id("droppable"));
+        Actions action = new Actions(driver);
+        //drag and drop using actions class
+      //  action.dragAndDrop(src,tgt).perform();
+        //chain of actions
+        action.clickAndHold(src).moveToElement(tgt).release().build().perform();
+
+
+    }
+
+    public void framePractie() {
+        driver.get("https://jqueryui.com/droppable/");
+        //switch to frame
+        driver.switchTo().frame(0); //index starts from 0
+        //  WebElement frme = driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+        //  driver.switchTo().frame(frme);
+        WebElement dragg = driver.findElement(By.id("draggable"));
+        System.out.println(dragg.isDisplayed());
+        driver.switchTo().defaultContent(); //exit from the frame
+        WebElement titleImg = driver.findElement(By.xpath("//a[@title='jQuery UI']"));
+        System.out.println(titleImg.isDisplayed());
+    }
+
     public void handleframes() {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/frames.html");
         driver.switchTo().frame("frame-header");
         WebElement frameText = driver.findElement(By.xpath("//h1[@class='display-6']"));
         System.out.println("FrameText: " + frameText.getText());
-
         driver.switchTo().defaultContent(); //exit from the frame
     }
 
     public void handleModalWindow() {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/dialog-boxes.html");
-
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         //locate the open modal button
         WebElement openmodal = driver.findElement(By.id("my-modal"));
@@ -109,7 +160,6 @@ public class Seleniumscripts {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/dialog-boxes.html");
         // informative alert
         WebElement info_alert = driver.findElement(By.id("my-alert"));
-
         info_alert.click();
         //switch the focus to alert
         Alert alert = driver.switchTo().alert();
