@@ -1,11 +1,14 @@
 package seleniumBasics;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
@@ -24,11 +27,11 @@ public class Seleniumscripts {
     String url = "https://www.selenium.dev/";
     WebDriver driver;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         Seleniumscripts seleniumscripts = new Seleniumscripts();
         seleniumscripts.launchBrowser("chrome");
-        seleniumscripts.typeCharatcerInInputBox();
-     //   seleniumscripts.teardown();
+        seleniumscripts.senddatatoInputbox();
+        //   seleniumscripts.teardown();
 
     }
 
@@ -79,9 +82,40 @@ public class Seleniumscripts {
 
     }
 
-    public void typeCharatcerInInputBox(){
+    public void captureScreehots() throws IOException {
+        driver.get("https://jqueryui.com/slider/");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+        // complete webpage screenshot
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        File file = ts.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(file, new File("E:\\screenshot\\fullpage"+System.currentTimeMillis()+".jpg"));
+        System.out.println("Full page screenshot captured successfully");
+        // capture screenshot of a specific element
+        js.executeScript("window.scrollTo(0,0)");
+        file = ts.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(file, new File("E:\\screenshot\\fulltoppage"+System.currentTimeMillis()+".jpg"));
+    }
+
+    public void handlescroll() {
+        //JavaScript executor
+        driver.get("https://jqueryui.com/slider/");
+        // random scroll
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        //   js.executeScript("window.scrollBy(0,500)"); //scroll down by 500 pixels
+        // scroll till the specific element is visible
+        WebElement tggleclass = driver.findElement(By.xpath("//a[contains(text(),'Toggle Class')]"));
+        //  js.executeScript("arguments[0].scrollIntoView(true);",tggleclass);
+        //scroll till the end of the page
+
+        js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+        js.executeScript("window.scrollTo(0,0)"); //scroll to the top of the page
+
+    }
+
+    public void typeCharatcerInInputBox() {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
-        WebElement inputbox= driver.findElement(By.name("my-text"));
+        WebElement inputbox = driver.findElement(By.name("my-text"));
         Actions action = new Actions(driver);
         action.moveToElement(inputbox).click().keyDown(Keys.LEFT_SHIFT).sendKeys("hello selenium").keyUp(Keys.LEFT_SHIFT).build().perform();
       /*
@@ -94,16 +128,16 @@ public class Seleniumscripts {
 
     public void handleSlider() throws InterruptedException {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
-        WebElement slider= driver.findElement(By.xpath("//input[@name='my-range']"));
+        WebElement slider = driver.findElement(By.xpath("//input[@name='my-range']"));
         Actions action = new Actions(driver);
         //move the slider to right by 30 units
-        action.clickAndHold(slider).moveByOffset(150,0).release().build().perform();
+        action.clickAndHold(slider).moveByOffset(150, 0).release().build().perform();
         Thread.sleep(2000);
-        action.clickAndHold(slider).moveByOffset(-250,0).release().build().perform();
-      //  action.dragAndDropBy(slider,100,0).perform();
+        action.clickAndHold(slider).moveByOffset(-250, 0).release().build().perform();
+        //  action.dragAndDropBy(slider,100,0).perform();
     }
 
-    public void dragAndDrop(){
+    public void dragAndDrop() {
         driver.get("https://jqueryui.com/droppable/");
         //switch to frame
         driver.switchTo().frame(0);
@@ -111,7 +145,7 @@ public class Seleniumscripts {
         WebElement tgt = driver.findElement(By.id("droppable"));
         Actions action = new Actions(driver);
         //drag and drop using actions class
-      //  action.dragAndDrop(src,tgt).perform();
+        //  action.dragAndDrop(src,tgt).perform();
         //chain of actions
         action.clickAndHold(src).moveToElement(tgt).release().build().perform();
 
@@ -144,7 +178,11 @@ public class Seleniumscripts {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         //locate the open modal button
         WebElement openmodal = driver.findElement(By.id("my-modal"));
-        openmodal.click();
+     //   openmodal.click();
+        //click using javascript executor
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", openmodal);
+
         //locate the modal window
         WebElement modalwindow = driver.findElement(By.className("modal-content"));
         String modaltext = modalwindow.getText();
@@ -249,7 +287,10 @@ public class Seleniumscripts {
         input.clear(); //clear any pre populated data
 
         //use sendkeys method to enter data
-        input.sendKeys("Selenium Practice");
+      //  input.sendKeys("Selenium Practice");
+        //send data using javascript executor
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].value='JavaScript entered data';", input);
 
         WebElement disabled = driver.findElement(By.name("my-disabled"));
         status = disabled.isEnabled();
