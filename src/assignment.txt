@@ -1,0 +1,11 @@
+Assignment1:
+   Navigate to application
+   Mousehover on submit button
+   Print the background color of the button after mouse hover
+
+
+Assignment2:
+
+Launch chrome browser and navigate to https://bonigarcia.dev/selenium-webdriver-java/web-form.html
+Select both checkboxes
+Capture screenshot and save it in the project folder with the name "checkbox.png"

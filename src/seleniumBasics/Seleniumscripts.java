@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -26,11 +27,12 @@ import java.util.Set;
 public class Seleniumscripts {
     String url = "https://www.selenium.dev/";
     WebDriver driver;
+    String filePath = "E:\\JavaAug25Session\\MavenProjectAug25\\src\\test\\resources\\testdata\\testImg.jpeg";
 
     public static void main(String[] args) throws InterruptedException, IOException {
         Seleniumscripts seleniumscripts = new Seleniumscripts();
         seleniumscripts.launchBrowser("chrome");
-        seleniumscripts.senddatatoInputbox();
+        seleniumscripts.fileUpload();
         //   seleniumscripts.teardown();
 
     }
@@ -82,6 +84,60 @@ public class Seleniumscripts {
 
     }
 
+    public void fileUpload() {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        WebElement myFile = driver.findElement(By.name("my-file"));
+        myFile.sendKeys(filePath);
+
+    }
+
+    public void handleMorethantwoWindow() {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/index.html");
+        WebElement webform = driver.findElement(By.xpath("//a[normalize-space()='Web form']"));
+        WebElement dropdownpage = driver.findElement(By.xpath("//a[normalize-space()='Dropdown menu']"));
+        Actions action = new Actions(driver);
+        action.moveToElement(webform).keyDown(Keys.CONTROL).click().keyUp(Keys.CONTROL).build().perform();
+        action.moveToElement(dropdownpage).keyDown(Keys.CONTROL).click().keyUp(Keys.CONTROL).build().perform();
+        Set<String> allTabs = driver.getWindowHandles();
+        Iterator<String> it = allTabs.iterator();
+        String ifrsttab = it.next();
+        System.out.println("First tab id: " + ifrsttab + " URL: " + driver.getCurrentUrl());
+        String secondtab = it.next();
+        driver.switchTo().window(secondtab);
+        System.out.println("Second tab id: " + secondtab + " URL: " + driver.getCurrentUrl());
+        String thirdtab = it.next();
+        driver.switchTo().window(thirdtab);
+        System.out.println("Third tab id: " + thirdtab + " URL: " + driver.getCurrentUrl());
+
+        driver.switchTo().window(ifrsttab);
+        System.out.println("First tab id: " + ifrsttab + " URL: " + driver.getCurrentUrl());
+
+
+    }
+
+    public void handlemultipleWindows() throws InterruptedException {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/index.html");
+        //works when you have two tabs opened and you want to switch to the other tab and perform some actions and then switch back to the first tab
+        String firstTab = driver.getWindowHandle();
+        System.out.println("First tab id: " + firstTab);
+        System.out.println(driver.getTitle());
+        WebElement webform = driver.findElement(By.xpath("//a[normalize-space()='Web form']"));
+        Actions action = new Actions(driver);
+        action.moveToElement(webform).keyDown(Keys.CONTROL).click().keyUp(Keys.CONTROL).build().perform();
+        Set<String> allTabs = driver.getWindowHandles();
+
+        for (String tab : allTabs) {
+            if (!tab.equals(firstTab)) {
+                driver.switchTo().window(tab);
+                System.out.println("Current tab title: " + driver.getTitle());
+                Thread.sleep(2000);
+                driver.close();
+            }
+        }
+        driver.switchTo().window(firstTab);
+    }
+
     public void captureScreehots() throws IOException {
         driver.get("https://jqueryui.com/slider/");
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -89,12 +145,12 @@ public class Seleniumscripts {
         // complete webpage screenshot
         TakesScreenshot ts = (TakesScreenshot) driver;
         File file = ts.getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(file, new File("E:\\screenshot\\fullpage"+System.currentTimeMillis()+".jpg"));
+        FileUtils.copyFile(file, new File("E:\\screenshot\\fullpage" + System.currentTimeMillis() + ".jpg"));
         System.out.println("Full page screenshot captured successfully");
         // capture screenshot of a specific element
         js.executeScript("window.scrollTo(0,0)");
         file = ts.getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(file, new File("E:\\screenshot\\fulltoppage"+System.currentTimeMillis()+".jpg"));
+        FileUtils.copyFile(file, new File("E:\\screenshot\\fulltoppage" + System.currentTimeMillis() + ".jpg"));
     }
 
     public void handlescroll() {
@@ -178,7 +234,7 @@ public class Seleniumscripts {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         //locate the open modal button
         WebElement openmodal = driver.findElement(By.id("my-modal"));
-     //   openmodal.click();
+        //   openmodal.click();
         //click using javascript executor
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", openmodal);
@@ -287,7 +343,7 @@ public class Seleniumscripts {
         input.clear(); //clear any pre populated data
 
         //use sendkeys method to enter data
-      //  input.sendKeys("Selenium Practice");
+        //  input.sendKeys("Selenium Practice");
         //send data using javascript executor
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].value='JavaScript entered data';", input);
