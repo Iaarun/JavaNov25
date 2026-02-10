@@ -7,6 +7,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -28,11 +31,13 @@ public class Seleniumscripts {
     String url = "https://www.selenium.dev/";
     WebDriver driver;
     String filePath = "E:\\JavaAug25Session\\MavenProjectAug25\\src\\test\\resources\\testdata\\testImg.jpeg";
-
-    public static void main(String[] args) throws InterruptedException, IOException {
+   String filepath1="E:\\screenshot\\test1.txt";
+    public static void main(String[] args) throws InterruptedException, IOException, AWTException {
         Seleniumscripts seleniumscripts = new Seleniumscripts();
         seleniumscripts.launchBrowser("chrome");
-        seleniumscripts.fileUpload();
+        seleniumscripts.handletooltip();
+
+
         //   seleniumscripts.teardown();
 
     }
@@ -84,6 +89,44 @@ public class Seleniumscripts {
 
     }
 
+    public void handletooltip(){
+        driver.get("https://jqueryui.com/tooltip/");
+        driver.switchTo().frame(0);
+       WebElement age= driver.findElement(By.id("age"));
+      WebElement yourage= driver.findElement(By.xpath("//label[@for='age']"));
+       //tooltip
+        Actions actions = new Actions(driver);
+        actions.moveToElement(age).perform();
+        actions.moveToElement(yourage).perform();
+        WebElement tooltip = driver.findElement(By.id("age"));
+        String tooltiptext=   tooltip.getDomAttribute("title");
+        System.out.println("Tooltip text: "+tooltiptext);
+
+    }
+   public void fileUploadUsingRobotClass() throws AWTException, InterruptedException {
+        /*
+        Steps to handle file upload using Robot class
+        1. Click on the file upload button to open the file upload window
+        2. Use StringSelection class to copy the file path to clipboard
+        3. Use Robot class to paste the file path in the file upload window and press enter key
+        */
+       driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+       WebElement myFile = driver.findElement(By.xpath("//input[@name='my-file']"));
+     //  myFile.click(); // this action is throwing invalid argument exception because the file upload window is a OS level window and not a part of the web page
+        Actions action = new Actions(driver);
+        action.moveToElement(myFile).click().build().perform();
+        Thread.sleep(200);
+       StringSelection stringSelection = new StringSelection(filePath);
+       Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+         Robot robot = new Robot();
+         robot.delay(2000); //delay to allow the file upload window to open
+         robot.keyPress(KeyEvent.VK_CONTROL);
+         robot.keyPress(KeyEvent.VK_V);
+         robot.keyPress(KeyEvent.VK_ENTER);
+         robot.keyRelease(KeyEvent.VK_ENTER);
+         robot.keyRelease(KeyEvent.VK_CONTROL);
+         robot.keyRelease(KeyEvent.VK_V);
+   }
     public void fileUpload() {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
