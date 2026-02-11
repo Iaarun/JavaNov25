@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +36,7 @@ public class Seleniumscripts {
     public static void main(String[] args) throws InterruptedException, IOException, AWTException {
         Seleniumscripts seleniumscripts = new Seleniumscripts();
         seleniumscripts.launchBrowser("chrome");
-        seleniumscripts.handletooltip();
+        seleniumscripts.seleniumwaits1();
 
 
         //   seleniumscripts.teardown();
@@ -86,6 +87,48 @@ public class Seleniumscripts {
         System.out.println("Page Title: " + driver.getTitle());
 
         driver.navigate().refresh();
+
+    }
+
+    public void seleniumwaits1(){
+        /*
+            1- implicit wait: it is a global wait and it will be applied to all the web elements in the script, it will wait for the element to be present in the DOM for the specified time duration,
+             if the element is not found within the specified time duration then it will throw NoSuchElementException
+              2-  explicit wait: it is a conditional wait and it will be applied to a specific web element, it will wait for the element to be present in the DOM and visible on the web page for the specified time duration,
+                 if the element is not found within the specified time duration then it will throw TimeoutException
+             3-    Fluent wait: it is a conditional wait and it will be applied to a specific web element, it will wait for the element to be present in the DOM and visible on the web page for the specified time duration,
+                 it also allows to specify the polling time and ignore specific exceptions
+         */
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/loading-images.html");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        WebElement hiddenEle= driver.findElement(By.xpath("//p[contains(text(),'Done!')]"));
+        //explicit wai
+        System.out.println(hiddenEle.isDisplayed());
+    }
+
+    public void handleCalender() throws InterruptedException {
+        //expected date 30 March2027
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+        driver.findElement(By.name("my-date")).click();
+        String caldata=   driver.findElement(By.xpath("//div[@class='datepicker-days']/table/thead/tr[2]/th[2]")).getText();
+        System.out.println("calender data: "+caldata);
+        System.out.println(Arrays.toString(caldata.split(" ")));
+        String month=  caldata.split(" ")[0].trim();
+        String year=  caldata.split(" ")[1].trim();
+        System.out.println("Start Month: "+month+" Year: "+year);
+
+        while (!(month.equals("March") && year.equals("2027"))){
+          WebElement nextbutn=  driver.findElement(By.xpath("//div[@class='datepicker-days']//th[@class='next'][normalize-space()='»']"));
+          nextbutn.click();
+          caldata=   driver.findElement(By.xpath("//div[@class='datepicker-days']/table/thead/tr[2]/th[2]")).getText();
+            month=  caldata.split(" ")[0].trim();
+            year=  caldata.split(" ")[1].trim();
+            System.out.println("Month: "+month+" Year: "+year);
+        }
+
+         driver.findElement(By.xpath("//td[normalize-space()='30']")).click();
+        Thread.sleep(2000);
+         driver.findElement(By.xpath("//h1")).click(); //click outside the calendar
 
     }
 
