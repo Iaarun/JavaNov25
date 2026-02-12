@@ -5,7 +5,10 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -36,7 +39,7 @@ public class Seleniumscripts {
     public static void main(String[] args) throws InterruptedException, IOException, AWTException {
         Seleniumscripts seleniumscripts = new Seleniumscripts();
         seleniumscripts.launchBrowser("chrome");
-        seleniumscripts.seleniumwaits1();
+        seleniumscripts.handleWebTales();
 
 
         //   seleniumscripts.teardown();
@@ -90,19 +93,62 @@ public class Seleniumscripts {
 
     }
 
+    public void handleWebTales(){
+        driver.get("https://www.dezlearn.com/webtable-example/");
+
+       List<WebElement> cols=  driver.findElements(By.xpath("//table[@class='tg']/tbody/tr[1]/th"));
+        System.out.println("Number of columns: "+cols.size());
+        List<WebElement> rows=  driver.findElements(By.xpath("//table[@class='tg']/tbody/tr"));
+        System.out.println("Number of rows: "+rows.size());
+       // complete table data
+       for (int i=2; i<=rows.size(); i++){
+           for (int j=1; j<=2; j++){
+               WebElement cellData= driver.findElement(By.xpath("//table[@class='tg']/tbody/tr["+i+"]/td["+j+"]"));
+               System.out.print(cellData.getText()+" ");
+           }
+           System.out.println();
+       }
+
+
+    }
+
+    public void seleniumwaits3(){
+        /*3-    Fluent wait: it is a conditional wait and it will be applied to a specific web element, it will wait for the element to be present in the DOM and visible on the web page for the specified time duration,
+                 it also allows to specify the polling time and ignore specific exceptions
+         */
+        FluentWait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .ignoring(NoSuchElementException.class);
+
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/loading-images.html");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[contains(text(),'Done!')]")));
+        WebElement hiddenEle= driver.findElement(By.xpath("//p[contains(text(),'Done!')]"));
+        System.out.println(hiddenEle.isDisplayed());
+    }
+
+    public void seleniumwaits2(){
+           /*
+              2-  explicit wait: it is a conditional wait and it will be applied to a specific web element, it will wait for the element to be present in the DOM and visible on the web page for the specified time duration,
+                 if the element is not found within the specified time duration then it will throw TimeoutException
+         */
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/loading-images.html");
+        // explicit wait
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[contains(text(),'Done!')]")));
+        WebElement hiddenEle= driver.findElement(By.xpath("//p[contains(text(),'Done!')]"));
+        System.out.println(hiddenEle.isDisplayed());
+
+    }
+
     public void seleniumwaits1(){
         /*
             1- implicit wait: it is a global wait and it will be applied to all the web elements in the script, it will wait for the element to be present in the DOM for the specified time duration,
              if the element is not found within the specified time duration then it will throw NoSuchElementException
-              2-  explicit wait: it is a conditional wait and it will be applied to a specific web element, it will wait for the element to be present in the DOM and visible on the web page for the specified time duration,
-                 if the element is not found within the specified time duration then it will throw TimeoutException
-             3-    Fluent wait: it is a conditional wait and it will be applied to a specific web element, it will wait for the element to be present in the DOM and visible on the web page for the specified time duration,
-                 it also allows to specify the polling time and ignore specific exceptions
          */
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/loading-images.html");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         WebElement hiddenEle= driver.findElement(By.xpath("//p[contains(text(),'Done!')]"));
-        //explicit wai
         System.out.println(hiddenEle.isDisplayed());
     }
 

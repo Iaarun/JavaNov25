@@ -9,3 +9,9 @@ Assignment2:
 Launch chrome browser and navigate to https://bonigarcia.dev/selenium-webdriver-java/web-form.html
 Select both checkboxes
 Capture screenshot and save it in the project folder with the name "checkbox.png"
+
+
+Assignment3:
+Launch chrome browser and navigate to https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html
+Perform arithmetic operation 2+3 and print the result in console
+and Print the result from the screen in console
