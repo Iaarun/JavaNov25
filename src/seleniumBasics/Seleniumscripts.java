@@ -3,7 +3,9 @@ package seleniumBasics;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -16,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -38,12 +41,36 @@ public class Seleniumscripts {
    String filepath1="E:\\screenshot\\test1.txt";
     public static void main(String[] args) throws InterruptedException, IOException, AWTException {
         Seleniumscripts seleniumscripts = new Seleniumscripts();
-        seleniumscripts.launchBrowser("chrome");
-        seleniumscripts.handleWebTales();
-
+      //  seleniumscripts.launchBrowser("chrome");
+        seleniumscripts.usingChromeOptions();
+   //   seleniumscripts.getDayfromDate();
 
         //   seleniumscripts.teardown();
 
+    }
+
+    public void usingChromeOptions(){
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--incognito");
+        options.addArguments("--disable-notifications");
+        options.addArguments("--start-maximized");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments("--headless=new");
+      //  options.addEncodedExtensions("")
+        options.addArguments("--disable-infobars");
+        options.setAcceptInsecureCerts(true);
+        WebDriver    driver = new ChromeDriver(options);
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html");
+        System.out.println(driver.getTitle());
+        driver.quit();
+
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.addArguments("--private");
+        firefoxOptions.addArguments("--disable-notifications");
+        firefoxOptions.addArguments("--start-maximized");
+        firefoxOptions.addArguments("--disable-popup-blocking");
+        firefoxOptions.addArguments("--headless");
+        firefoxOptions.setAcceptInsecureCerts(true);
     }
 
     public void launchBrowser(String browser) {
@@ -58,7 +85,7 @@ public class Seleniumscripts {
                 System.out.println(browser + " Browser not supported");
         }
 
-        driver.manage().window().maximize();
+     //   driver.manage().window().maximize();
 
     }
 
@@ -91,6 +118,16 @@ public class Seleniumscripts {
 
         driver.navigate().refresh();
 
+    }
+
+    public void getDayfromDate(){
+      LocalDate date=   LocalDate.now();
+        System.out.println("Current date: "+date);
+        System.out.println("Current day: "+date.getDayOfWeek());
+        System.out.println(date.getDayOfMonth()+1);
+      //  System.out.println("Tomorrow "+ Integer.parseInt(date.getDayOfMonth()+"")+1);
+
+    //   LocalDate currentdate= LocalDate.parse(LocalDate.now().toString());
     }
 
     public void handleWebTales(){
