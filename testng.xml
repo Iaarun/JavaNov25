@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="demosuite">
+    <test name="dummy test">
+        <classes>
+            <class name="testNgdemo.TestNgAnnotation"/>
+            <class name="testNgdemo.TestNgAnnotation2"></class>
+        </classes>
+    </test>
+</suite>
+
+<!--
+For method level configuration
+ <test name="dummy test">
+        <classes>
+            <class name="testNgdemo.TestNgAnnotation">
+                <methods>
+                    <include name="test1"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+-->
