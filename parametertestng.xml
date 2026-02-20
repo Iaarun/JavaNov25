@@ -2,6 +2,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="demosuite">
     <parameter name="browser" value="edge"></parameter>
+   <!-- <parameter name="username" value="testuser"></parameter>
+    <parameter name="password" value="pass@123"></parameter> -->
     <test name="dummy test">
         <classes>
             <class name="testNgdemo.ParameterizationDemo"/>

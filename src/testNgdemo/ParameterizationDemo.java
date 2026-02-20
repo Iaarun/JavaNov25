@@ -7,10 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +29,8 @@ public class ParameterizationDemo {
             case "chrome":
                 driver = new ChromeDriver();
                 break;
-            case "edge":
-                driver = new EdgeDriver();
+            case "firefox":
+                driver = new FirefoxDriver();
                 break;
             default:
                 System.out.println(browser + " Browser not supported");
@@ -48,6 +45,9 @@ public class ParameterizationDemo {
     @Test
     public void assignment4(){
         driver.get("https://live.techpanda.org/index.php/");
+        //print thread id
+        System.out.println("Thread id: "+Thread.currentThread().getId());
+        System.out.println();
         String pg_title= driver.findElement(By.xpath("//div[@class='page-title']/h2")).getText();
         System.out.println("Home page title: "+pg_title);
         //click on mobile menu
@@ -68,5 +68,6 @@ public class ParameterizationDemo {
 
         System.out.println("Phone names: "+phonenames);
     }
+//    @Parameters({"username","password"})
 
 }
