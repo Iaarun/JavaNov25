@@ -68,6 +68,6 @@ public class ParameterizationDemo {
 
         System.out.println("Phone names: "+phonenames);
     }
-//    @Parameters({"username","password"})
+
 
 }

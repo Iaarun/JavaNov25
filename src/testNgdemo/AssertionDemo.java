@@ -52,7 +52,6 @@ public class AssertionDemo {
         System.out.println("Asserting values using hard assertions");
         int a = 10;
         int b = 20;
-
         int sum = a + b;
         int multiply = a * b;
      softAssert.assertEquals(sum,30,"Sum is not correct");
@@ -61,5 +60,4 @@ public class AssertionDemo {
         softAssert.assertAll();
 
     }
-
 }
